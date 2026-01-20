@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<title>大獎機台 天天夾品牌大獎</title>
+<style>
+@font-face {
+  font-family: 'ShopeeBold';
+  src: url('./程式檔案/ShopeeNotoSans(content)-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'ShopeeMedium';
+  src: url('./程式檔案/ShopeeNotoSans(content)-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+/* 浮動工具列 */
+.toolbar-float {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+}
+.toolbar-float .tool-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.toolbar-float span {
+  white-space: nowrap;
+}
+.toolbar-float input[type="number"] {
+  width: 46px;
+  padding: 2px 4px;
+  border-radius: 6px;
+  border: none;
+  font-size: 12px;
+  text-align: center;
+}
+body { padding-top: 60px; }
+
+/* Default: all text bold */
+body, div, p, span, strong, .tag-bar, .section-title,
+.note, .price-line, .count-line, .date-tag, .sub-label {
+  font-family: 'ShopeeBold';
+}
+.note{max-width:1200px;width:100%;margin:0 auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+.note img{max-width:100%;height:auto;}
+/* Product Names use Medium */
+
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei",
+        "PingFang TC", "Helvetica Neue", Arial, sans-serif;
+      background: #3566d9;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 1200px;
+      margin: 0 auto;
+      background: #3566d9;
+      padding: 40px 0 60px;
+    }
+
+    .panel-outer {
+      width: 980px;
+      margin: 0 auto;
+      background: #ff9b1a;
+      border-radius: 26px;
+      padding: 20px;
+    }
+
+    .panel-inner {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 26px 32px 36px;
+    }
+
+    .tag-bar {
+      width: 980px;
+      margin: 0 auto 16px;
+      background: #ffbe00;
+      border-radius: 24px;
+      padding: 10px 24px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 50px; /* 大標題預設 50px */
+      font-weight: 700;
+      letter-spacing: 4px;
+    }
+
+    .section-title {
+      display: inline-block;
+      padding: 6px 26px;
+      border-radius: 999px;
+      background: #ff9b1a;
+      color: #ffffff;
+      font-size: 47px; /* 區塊標題 47px */
+      font-weight: 700;
+      margin-bottom: 20px;
+		width: 80%;
+		margin-top: 
+		
+		
+    }
+
+    .text-center { text-align: center; }
+
+    /* 🔸 本月最大獎：一上一下，上下兩組，全部置中 🔸 */
+    .big-prize-wrap {
+      display: flex;
+      flex-direction: column;     /* 改成上下排 */
+      align-items: center;        /* 置中 */
+      gap: 32px;                  /* 上下間距 */
+      margin-top: 8px;
+    }
+
+    .big-prize {
+      width: 1000px;               /* 跟圓一樣寬 */
+      text-align: center;
+    }
+
+    .big-prize-pic {
+      width: 420px;               /* 420 x 420 */
+      height: 420px;
+      border-radius: 50%;
+      border: 3px solid #a36537;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #999;
+      margin: 0 auto 18px;
+    }
+
+    /* 若之後要改成圖片：
+    .big-prize-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    */
+
+    .sub-label {
+      font-size: 40px; /* 視為內容字，29px */
+      color: #4a0517;
+      font-weight: 700;
+    }
+
+    .big-prize-price {
+      font-size: 47px;  /* 金額 47px */
+      color: #79a8ee;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .big-prize-info {
+      font-size: 47px; /* 視為內容字，29px */
+      color: #79a8ee;
+      margin-top: -10px;
+    }
+
+    /* 🔸 天天夾品牌大獎區塊 🔸 */
+
+    .note {
+      font-size: 29px;  /* 內容 29px */
+      color: #ffffff;
+      line-height: 1.7;
+      margin-bottom: 16px;
+		margin-top: 20px;
+		text-align: center;
+		width: auto
+    }
+
+    .note strong { color: #e85a00; }
+
+    .date-tag {
+      display: inline-block;
+      margin: 24px auto 10px;
+      padding: 4px 100px;
+      border-radius: 999px;
+      background: #3566d9;
+      color: #ffffff;
+      font-size: 29px; /* 內容 29px */
+      font-weight: 700;
+    }
+
+    .prize-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 40px;
+      row-gap: 28px;
+      margin-top: 10px;
+    }
+
+    .prize-card {
+      width: 44%;
+      text-align: center;
+    }
+
+    .prize-pic {
+      width: 310px;              /* 你指定的 310 x 310 */
+      height: 310px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 3px solid #a36537;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #999999;
+    }
+
+    /* 若改成圖片：
+    .prize-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    */
+
+    .pill {
+      display: inline-block;
+      margin-top: -12px;
+      padding: 6px 30px;
+      border-radius: 999px;
+      background: #ff9b1a;
+      color: #ffffff;
+      font-size: 34px; /* 品名 34px */
+      font-weight: 700;
+      min-width: 180px;
+    }
+
+    .price-line {
+      font-size: 47px;  /* 金額 47px */
+      color: #79a8ee;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .count-line {
+      font-size: 47px;  /* 內容 47px */
+      color: #79a8ee;
+		 margin-top: -10px;
+    }
+
+    /* 🔸 底部區塊 🔸 */
+
+    .footer-panel {
+      width: 980px;
+      margin: 28px auto 0;
+      background: #ff9b1a;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 30px 32px;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .coin-btn {
+      display: inline-block;
+      margin: 30px auto 6px;
+      background: #ff6f3c;
+      border-radius: 200px;
+      padding: 10px 30px;
+      font-size: 36px;
+      font-weight: 700;
+	color: #ffffff;
+		width: 80%;
+    }
+
+    .legal {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+.big-prize-name,
+.prize-card .prize-name,
+.prize-card .name {
+  display: inline-block;
+  padding: 6px 26px;
+  border-radius: 999px;
+  background: #f77553;
+  color: #ffffff;
+  font-size: 47px; /* 品名 34px */
+  font-weight: 700;
+  margin: 0 auto;
+min-width: 700px;
+}
+.coin-image-wrap {
+  margin: 0px auto;       /* 上下 0px + 置中 */
+  text-align: center;
+}
+
+.coin-image-wrap img {
+  width: auto;
+  height: 200px;
+  display: block;
+  margin: 0 auto;          /* 圖片本身置中 */
+}
+/* ====== 工具列：按鈕版（取代字級調整） ====== */
+.toolbar-float .tool-group{ display:none; } /* 隱藏舊的 group（保險用） */
+.toolbar-float .tool-btn{
+  appearance:none;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.14);
+  color:#fff;
+  font-size: 14px;
+  font-family: 'ShopeeBold';
+  cursor:pointer;
+  line-height: 1;
+}
+.toolbar-float .tool-btn:hover{ background: rgba(255,255,255,0.22); }
+.toolbar-float .tool-btn:active{ transform: translateY(1px); }
+.toolbar-float .tool-btn-secondary{ background: rgba(255,255,255,0.10); }
+
+/* ====== 浮動細節調整面板 ====== */
+.detail-panel{
+  position: fixed;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  width: 320px;
+  background: rgba(0,0,0,0.78);
+  border-radius: 18px;
+  padding: 12px 12px 10px;
+  color:#fff;
+  font-family: 'ShopeeBold';
+}
+.detail-title{
+  font-size: 14px;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+.detail-row{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+.detail-row label{
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+.detail-row input, .detail-row select{
+  width: 140px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: none;
+  font-size: 12px;
+}
+.detail-hint{
+  font-size: 11px;
+  opacity: 0.75;
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+/* ====== 可選取圖片區（上傳圖片套用） ====== */
+.pic-selectable{ cursor: pointer; }
+.pic-selected{
+  outline: 4px solid rgba(255,255,255,0.85);
+  outline-offset: 4px;
+}
+
+
+/* ====== 圖片剪裁按鈕（icon 在圖片左側、不影響圖片置中） ====== */
+.pic-edit-row{
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin: 0 auto 18px; /* 保持原本置中 */
+}
+.pic-edit-row .pic-selectable{
+  display:block;
+  margin: 0 auto !important;
+  position: relative;
+}
+.pic-edit-btn{
+  position: absolute;
+  left: -54px; /* 在圖片左側外，不佔版位 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0,0,0,0.12);
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.pic-edit-btn:hover{ background: rgba(0,0,0,0.18); }
+.pic-edit-btn svg{ width: 22px; height: 22px; }
+
+/* ====== 圖片剪裁 Modal ====== */
+.crop-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,0.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding: 18px;
+}
+.crop-box{
+  width: min(920px, 96vw);
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  font-family: 'ShopeeBold';
+}
+.crop-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.crop-title{ font-size: 16px; color:#111; }
+.crop-actions{ display:flex; gap: 8px; }
+.crop-btn{
+  appearance:none;
+  border:none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor:pointer;
+  font-family: 'ShopeeBold';
+}
+.crop-btn.primary{ background:#ff6f3c; color:#fff; }
+.crop-btn.secondary{ background: rgba(0,0,0,0.08); color:#111; }
+.crop-body{
+  display:flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+/* ====== 文字行距（可由細節調整面板控制） ====== */
+html{
+  --name-line-height: 1.2;
+  --price-line-height: 1.15;
+}
+.big-prize-name,
+.pill{
+  line-height: var(--name-line-height);
+}
+.big-prize-price,
+.price-line{
+  line-height: var(--price-line-height);
+}
+.crop-canvas-wrap{
+  flex: 1 1 520px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 14px;
+  padding: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.crop-controls{
+  flex: 0 0 260px;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  padding: 6px 4px;
+}
+.crop-controls label{
+  font-size: 12px;
+  color:#222;
+}
+.crop-controls input[type="range"]{ width:100%; }
+.crop-hint{
+  font-size: 12px;
+  color:#444;
+  line-height:1.4;
+  opacity: 0.9;
+}
+
+/* ====== 徽章：黑底白字 1:1 + 對話框三角 ====== */
+.big-prize-pic{ position: relative; } /* 作為徽章定位基準 */
+
+.limit-badge{
+  position:absolute;
+  top: var(--badge-top, -8px);
+  right: var(--badge-right, -26px);
+  width: var(--badge-size, 92px);
+  height: var(--badge-size, 92px);
+  border-radius: 50%;
+  background: #000;
+  color:#fff;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-family:'ShopeeBold';
+  font-size: var(--badge-font, 28px);
+  line-height: 1.05;
+  z-index: 5;
+  isolation: isolate;
+}
+.limit-badge .badge-top{ display:block; }
+.limit-badge .badge-bottom{ display:block; }
+
+/* 三角：預設左下（可透過 class 切方向）
+   需求：左右翻轉 + 上下翻轉 + 緊貼底圈（像對話框）
+   我這裡用「貼合值」控制緊貼程度（--tail-join） */
+.limit-badge::after{
+  content:"";
+  position:absolute;
+    z-index: -1;
+width: 0;
+  height: 0;
+  border-style: solid;
+  transform: rotate(var(--tail-angle, 26deg));
+}
+
+/* 左下：向左下伸出 */
+.limit-badge.dir-bl::after{
+  left: var(--tail-left, 10px);
+  bottom: calc(-1px + var(--tail-join, 0px));
+  border-width: var(--tail-size, 14px) var(--tail-size, 14px) 0 0;
+  border-color: #000 transparent transparent transparent;
+}
+
+/* 右下：向右下伸出（水平翻轉） */
+.limit-badge.dir-br::after{
+  right: var(--tail-left, 10px);
+  bottom: calc(-1px + var(--tail-join, 0px));
+  border-width: var(--tail-size, 14px) 0 0 var(--tail-size, 14px);
+  border-color: #000 transparent transparent transparent;
+}
+
+/* 左上：向左上伸出（上下翻轉） */
+.limit-badge.dir-tl::after{
+  left: var(--tail-left, 10px);
+  top: calc(-1px + var(--tail-join, 0px));
+  border-width: 0 var(--tail-size, 14px) var(--tail-size, 14px) 0;
+  border-color: transparent transparent #000 transparent;
+}
+
+/* 右上：向右上伸出（水平+上下翻轉） */
+.limit-badge.dir-tr::after{
+  right: var(--tail-left, 10px);
+  top: calc(-1px + var(--tail-join, 0px));
+  border-width: 0 0 var(--tail-size, 14px) var(--tail-size, 14px);
+  border-color: transparent transparent #000 transparent;
+}
+
+
+    /* 工單特規：只有C欄時，該組置中、右邊不顯示 */
+    .prize-card.hidden { display: none !important; }
+    .prize-card.single { grid-column: 1 / -1; justify-self: center; }
+
+/* ====== 圖片佔位文字：水平＋垂直置中 ====== */
+.pic-placeholder{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;      /* 垂直置中 */
+  justify-content: center;  /* 水平置中 */
+  text-align: center;
+  pointer-events: none;     /* 不影響點擊圖片框 */
+}
+
+
+/* ====== 圖片：手動換圖按鈕（剪刀下方） ====== */
+.pic-replace-btn{
+  position: absolute;
+  left: -54px;            /* 與剪刀同一列 */
+  top: calc(50% + 32px);  /* 排在剪刀下面 */
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;   /* 常態顯示 */
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  background: rgba(0,0,0,0.12);
+}
+.pic-replace-btn:hover{ background: rgba(0,0,0,0.18); }
+.pic-replace-btn svg{ width: 22px; height: 22px; }
+
+</style>
+</head>
+<body>
+<div class="toolbar-float">
+<button class="tool-btn" onclick="triggerWorkorderUpload()" type="button">上傳工單</button>
+<button class="tool-btn" onclick="triggerImageUpload()" type="button">上傳圖片</button>
+<button class="tool-btn" onclick="downloadAsImage()" type="button">下載圖片</button>
+<button class="tool-btn tool-btn-secondary" onclick="toggleDetailPanel()" type="button">細節調整</button>
+<!-- hidden inputs -->
+<input accept=".xlsx,.xls,.json,.txt" id="workorderInput" style="display:none" type="file"/>
+<input accept="image/*" id="imageInput" multiple="" style="display:none" type="file"/>
+</div>
+<div class="detail-panel" id="detailPanel" style="display:none">
+<div class="detail-title">細節調整</div>
+<div class="detail-row">
+<label>徽章文字(上)</label>
+<input id="badgeTextTop" oninput="applyBadgeText()" type="text" value="日期"/>
+</div>
+<div class="detail-row">
+<label>徽章文字(下)</label>
+<input id="badgeTextBottom" oninput="applyBadgeText()" type="text" value="限定"/>
+</div>
+<div class="detail-row">
+<label>徽章尺寸</label>
+<input id="badgeSize" max="200" min="40" oninput="applyBadgeStyle()" type="number" value="150"/>
+</div>
+<div class="detail-row">
+<label>徽章字級</label>
+<input id="badgeFont" max="80" min="10" oninput="applyBadgeStyle()" type="number" value="44"/>
+</div>
+<div class="detail-row">
+<label>徽章上移(px)</label>
+<input id="badgeTop" max="80" min="-80" oninput="applyBadgeStyle()" type="number" value="42"/>
+</div>
+<div class="detail-row">
+<label>徽章右移(px)</label>
+<input id="badgeRight" max="120" min="-120" oninput="applyBadgeStyle()" type="number" value="-106"/>
+</div>
+<div class="detail-row">
+<label>三角大小</label>
+<input id="tailSize" max="40" min="6" oninput="applyBadgeStyle()" type="number" value="40"/>
+</div>
+<div class="detail-row">
+<label>三角貼合(px)</label>
+<input id="tailJoin" max="12" min="-12" oninput="applyBadgeStyle()" type="number" value="-1"/>
+</div>
+<div class="detail-row">
+<label>三角位置(左)</label>
+<input id="tailLeft" max="80" min="-30" oninput="applyBadgeStyle()" type="number" value="10"/>
+</div>
+<div class="detail-row">
+<label>三角方向</label>
+<select id="tailDir" onchange="applyBadgeStyle()">
+<option selected="" value="bl">左下</option>
+<option value="br">右下</option>
+<option value="tl">左上</option>
+<option value="tr">右上</option>
+</select>
+</div>
+<div class="detail-row">
+<label>三角角度(°)</label>
+<input id="tailAngle" max="180" min="-180" oninput="applyBadgeStyle()" type="number" value="26"/>
+</div>
+<div class="detail-row"><label>價格行距</label><input id="priceLineHeight" max="2.0" min="0.8" oninput="applyTextLineHeight()" step="0.05" type="number" value="1.15"/></div><div class="detail-row"><label>品名行距</label><input id="nameLineHeight" max="2.0" min="0.8" oninput="applyTextLineHeight()" step="0.05" type="number" value="1.2"/></div><div class="detail-hint">提示：先改數值看效果；下載圖片會輸出整頁。</div>
+</div><div class="page">
+<!-- start -->
+	<!-- tag-bar#1 -->
+<div class="tag-bar">大類標</div>
+<div class="panel-outer">
+<div class="panel-inner text-center">
+<div class="section-title">中類標</div>
+<div class="sub-label">小類標</div>
+<!-- ⭐ 這裡已改成「上下兩組、各自圖在上文字在下」 ⭐ -->
+<div class="big-prize-wrap">
+<!-- 第一組：Switch -->
+<div class="big-prize">
+<div class="big-prize-pic pic-selectable">
+<div class="limit-badge dir-bl"><span class="badge-top">左上角標記</span><span class="badge-bottom">限定</span></div>
+<div class="pic-placeholder">圖片區</div></div>
+<div class="big-prize-name">品名與圖片名稱 </div>
+<div class="big-prize-price">價值 $0,000</div>
+<div class="big-prize-info">共 0 名</div>
+</div>
+<!-- 第二組：商品 -->
+<div class="big-prize">
+<div class="big-prize-pic pic-selectable">
+<div class="limit-badge dir-bl"><span class="badge-top">左上角標記</span><span class="badge-bottom">限定</span></div>
+<div class="pic-placeholder">圖片區</div></div>
+<div class="big-prize-name">品名與圖片名稱 </div>
+<div class="big-prize-price">價值 $0,000</div>
+<div class="big-prize-info">共 0 名</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 下方：天天夾品牌大獎 -->
+<div style="height:16px;"></div>
+<div class="panel-outer">
+<div class="panel-inner text-center">
+<div class="section-title">中類標</div>
+<div class="sub-label">小類標</div>
+<!-- 日期 -->
+<div class="date-tag">日期</div>
+<!-- 每排 -->
+<div class="prize-grid">
+<div class="prize-card">
+<div class="prize-pic pic-selectable"> </div>
+<div class="pill">品名</div>
+<div class="price-line">價值 $000</div>
+<div class="count-line">共 000 名</div>
+</div>
+<div class="prize-card">
+<div class="prize-pic pic-selectable"> </div>
+<div class="pill">品名</div>
+<div class="price-line">價值 $000</div>
+<div class="count-line">共 000 名</div>
+</div>
+</div>
+<div class="section-title" style="margin-top: 80px;">中類標</div>
+<div class="coin-image-wrap">
+<img alt="蝦幣圖片" src="程式檔案\蝦幣icon.png" data-protect-image="1"/>
+</div>
+<div class="coin-btn">
+<p>蝦幣內容</p>
+</div>
+</div>
+</div>
+<div class="note" style="width:80%;">
+內容</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+let __selectedPicEl = null;
+
+function setSelectedPic(el){
+  document.querySelectorAll('.pic-selected').forEach(x=>x.classList.remove('pic-selected'));
+  __selectedPicEl = el;
+  if(el) el.classList.add('pic-selected');
+}
+
+function initPicSelection(){
+  document.querySelectorAll('.pic-selectable').forEach(el=>{
+    if(el.dataset.picSelectableBound === '1') return;
+    el.dataset.picSelectableBound = '1';
+    el.addEventListener('click', ()=> setSelectedPic(el));
+  });
+}
+
+
+
+let __cropModal = null;
+let __cropCanvas = null;
+let __cropCtx = null;
+let __cropImg = null;
+let __cropState = {base: 1, zoom: 1, x: 0, y: 0, dragging: false, lastX: 0, lastY: 0, size: 420, mode:'move', workCanvas:null, workCtx:null};
+
+function svgScissors(){
+  return `
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="6" cy="6" r="3"></circle>
+    <circle cx="6" cy="18" r="3"></circle>
+    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+    <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+  </svg>`;
+}
+
+function ensurePicEditorUI(){
+  document.querySelectorAll('.pic-selectable').forEach(pic=>{
+    if(pic.closest('.pic-edit-row')) return;
+
+    const row = document.createElement('div');
+    row.className = 'pic-edit-row';
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pic-edit-btn';
+    // btn.title = '裁切 / 放大縮小';
+    btn.innerHTML = svgScissors();
+
+    // 設定 size（用於裁切輸出解析度）
+    const rect = pic.getBoundingClientRect();
+    const size = Math.round(Math.max(rect.width || 0, rect.height || 0));
+    pic.dataset.cropSize = String(size || 420);
+
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      openCropModal(pic);
+    });
+
+    // 用 row 取代原本位置
+    const parent = pic.parentNode;
+    parent.insertBefore(row, pic);
+    row.appendChild(btn);
+    row.appendChild(pic);
+  });
+}
+
+function createCropModal(){
+  const modal = document.createElement('div');
+  modal.className = 'crop-modal';
+  modal.id = 'cropModal';
+  modal.innerHTML = `
+    <div class="crop-box">
+      <div class="crop-head">
+        <div class="crop-title">圖片編輯（拖曳移動、拉桿縮放）</div>
+        <div class="crop-actions">
+          <button class="crop-btn secondary" type="button" id="cropCancelBtn">取消</button>
+          <button class="crop-btn primary" type="button" id="cropApplyBtn">套用</button>
+        </div>
+      </div>
+      <div class="crop-body">
+        <div class="crop-canvas-wrap">
+          <canvas id="cropCanvas" width="520" height="520"></canvas>
+        </div>
+        <div class="crop-controls">
+          <div>
+            <label>縮放</label>
+            <input id="cropZoom" type="range" min="0.5" max="1.5" step="0.01" value="1" />
+          </div>
+          <div class="crop-mode">
+            <label style="margin-right:10px"><input type="radio" name="cropMode" value="move" checked> 移動/縮放</label>
+            <label><input type="radio" name="cropMode" value="smart"> 智慧選取</label>
+            <label><input type="radio" name="cropMode" value="erase"> 擦除</label>
+            
+          </div>
+          <div class="crop-smart" style="display:none">
+            <label>容差</label>
+            <input id="cropTol" type="range" min="0" max="80" step="1" value="20" />
+            <button class="crop-btn secondary" type="button" id="cropSmartResetBtn" style="margin-left:8px">重作</button>
+          </div>
+          <div class="crop-erase" style="display:none">
+            <label>筆刷</label>
+            <input id="eraseSize" type="range" min="6" max="80" step="1" value="24" />
+            <button class="crop-btn secondary" type="button" id="eraseResetBtn" style="margin-left:8px">重作</button>
+          </div>
+
+          <div class="crop-crop" style="display:none">
+            <div style="font-size:12px;opacity:.9">拖曳框選裁切範圍</div>
+            <button class="crop-btn secondary" type="button" id="cropSelClearBtn" style="margin-left:8px">清除</button>
+          </div>
+
+
+          <div class="crop-hint">
+            1) 先上傳圖片<br/>
+            2) 點左側剪刀 → 進入編輯<br/>
+            3) 直接拖曳圖片位置、用滑桿縮放<br/>
+            4) 套用後會更新到該圖片框
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  modal.addEventListener('click', (e)=>{
+    if(e.target === modal) closeCropModal();
+  });
+  document.body.appendChild(modal);
+
+  const canvas = modal.querySelector('#cropCanvas');
+  const ctx = canvas.getContext('2d');
+  __cropModal = modal;
+  __cropCanvas = canvas;
+  __cropCtx = ctx;
+
+  const zoom = modal.querySelector('#cropZoom');
+  zoom.addEventListener('input', ()=>{
+    __cropState.zoom = parseFloat(zoom.value) || 1;
+    // 實際縮放 = base * zoom
+    
+    redrawCrop();
+  });
+  // 模式切換：移動/縮放 vs 智慧選取
+  const smartWrap = modal.querySelector('.crop-smart');
+  const eraseWrap = modal.querySelector('.crop-erase');
+  const cropWrap  = modal.querySelector('.crop-crop');
+  const setModeUI = ()=>{
+    if(smartWrap) smartWrap.style.display = (__cropState.mode === 'smart') ? 'flex' : 'none';
+    if(eraseWrap) eraseWrap.style.display = (__cropState.mode === 'erase') ? 'flex' : 'none';
+    if(cropWrap)  cropWrap.style.display  = (__cropState.mode === 'crop')  ? 'flex' : 'none';
+  };
+  modal.querySelectorAll('input[name="cropMode"]').forEach(r=>{
+    r.addEventListener('change', ()=>{
+      __cropState.mode = r.value;
+      setModeUI();
+      redrawCrop();
+    });
+  });
+  if(smartWrap){
+    smartWrap.style.alignItems = 'center';
+    smartWrap.style.gap = '8px';
+    smartWrap.style.marginTop = '8px';
+  }
+  if(eraseWrap){
+    eraseWrap.style.alignItems = 'center';
+    eraseWrap.style.gap = '8px';
+    eraseWrap.style.marginTop = '8px';
+  }
+  if(cropWrap){
+    cropWrap.style.alignItems = 'center';
+    cropWrap.style.gap = '8px';
+    cropWrap.style.marginTop = '8px';
+  }
+  setModeUI();
+  const tolEl = modal.querySelector('#cropTol');
+
+  // 智慧選取（flood fill）：點擊要去背的區域
+  function floodSelectOnWorkCanvas(ix, iy, tol){
+    const wc = __cropState.workCanvas;
+    const wctx = __cropState.workCtx;
+    if(!wc || !wctx) return;
+    const w = wc.width, h = wc.height;
+    const x = Math.max(0, Math.min(w-1, Math.round(ix)));
+    const y = Math.max(0, Math.min(h-1, Math.round(iy)));
+    const img = wctx.getImageData(0,0,w,h);
+    const data = img.data;
+    const idx0 = (y*w + x)*4;
+    const seed = [data[idx0], data[idx0+1], data[idx0+2], data[idx0+3]];
+    const within = (i)=> Math.abs(data[i]-seed[0])<=tol && Math.abs(data[i+1]-seed[1])<=tol && Math.abs(data[i+2]-seed[2])<=tol && Math.abs(data[i+3]-seed[3])<=tol;
+    const q = [[x,y]];
+    const visited = new Uint8Array(w*h);
+    while(q.length){
+      const [cx,cy] = q.pop();
+      const p = cy*w + cx;
+      if(visited[p]) continue;
+      visited[p]=1;
+      const i = p*4;
+      if(!within(i)) continue;
+      data[i+3]=0;
+      if(cx>0) q.push([cx-1,cy]);
+      if(cx<w-1) q.push([cx+1,cy]);
+      if(cy>0) q.push([cx,cy-1]);
+      if(cy<h-1) q.push([cx,cy+1]);
+    }
+    wctx.putImageData(img,0,0);
+  }
+
+  canvas.addEventListener('click', (e)=>{
+    if(__cropState.mode !== 'smart') return;
+    if(!__cropImg || !__cropState.workCanvas) return;
+
+    const cw = __cropCanvas.width, ch = __cropCanvas.height;
+    const x0 = cw/2 + __cropState.x;
+    const y0 = ch/2 + __cropState.y;
+    const scale = (__cropState.base || 1) * (__cropState.zoom || 1);
+
+    const src = __cropState.workCanvas;
+    const sw = src.width, sh = src.height;
+
+    const localX = (e.offsetX - x0) / scale + sw/2;
+    const localY = (e.offsetY - y0) / scale + sh/2;
+
+    floodSelectOnWorkCanvas(localX, localY, Number(tolEl?.value || 20));
+    redrawCrop();
+  });
+
+  // 重作：回到原圖（保留移動/縮放狀態）
+  modal.querySelector('#cropSmartResetBtn')?.addEventListener('click', ()=>{
+    if(!__cropImg) return;
+    const wc = document.createElement('canvas');
+    wc.width = __cropImg.naturalWidth || __cropImg.width;
+    wc.height = __cropImg.naturalHeight || __cropImg.height;
+    const wctx = wc.getContext('2d');
+    wctx.drawImage(__cropImg, 0, 0);
+    __cropState.workCanvas = wc;
+    __cropState.workCtx = wctx;
+    redrawCrop();
+  });
+
+
+  
+  // 擦除：重作（回到原圖，保留移動/縮放狀態）
+  modal.querySelector('#eraseResetBtn')?.addEventListener('click', ()=>{
+    if(!__cropImg) return;
+    const wc = document.createElement('canvas');
+    wc.width = __cropImg.naturalWidth || __cropImg.width;
+    wc.height = __cropImg.naturalHeight || __cropImg.height;
+    const wctx = wc.getContext('2d');
+    wctx.drawImage(__cropImg, 0, 0);
+    __cropState.workCanvas = wc;
+    __cropState.workCtx = wctx;
+    redrawCrop();
+  });
+
+  // 裁切：清除選取框
+  modal.querySelector('#cropSelClearBtn')?.addEventListener('click', ()=>{
+    __cropState.cropSel = null;
+    redrawCrop();
+  });
+
+modal.querySelector('#cropCancelBtn').addEventListener('click', closeCropModal);
+  modal.querySelector('#cropApplyBtn').addEventListener('click', applyCropToTarget);
+
+  // drag / tool interaction
+  function canvasToWorkXY(cx, cy){
+    const cw = __cropCanvas.width, ch = __cropCanvas.height;
+    const x0 = cw/2 + __cropState.x;
+    const y0 = ch/2 + __cropState.y;
+    const scale = (__cropState.base || 1) * (__cropState.zoom || 1);
+    const src = (__cropState.workCanvas || __cropImg);
+    const sw = src.width, sh = src.height;
+    const localX = (cx - x0) / scale + sw/2;
+    const localY = (cy - y0) / scale + sh/2;
+    return { localX, localY, scale, sw, sh };
+  }
+
+  function ensureWorkCanvas(){
+    if(__cropState.workCanvas && __cropState.workCtx) return;
+    if(!__cropImg) return;
+    const wc = document.createElement('canvas');
+    wc.width = __cropImg.naturalWidth || __cropImg.width;
+    wc.height = __cropImg.naturalHeight || __cropImg.height;
+    const wctx = wc.getContext('2d');
+    wctx.drawImage(__cropImg, 0, 0);
+    __cropState.workCanvas = wc;
+    __cropState.workCtx = wctx;
+  }
+
+  function eraseAt(cx, cy){
+    ensureWorkCanvas();
+    const wc = __cropState.workCanvas;
+    const wctx = __cropState.workCtx;
+    if(!wc || !wctx) return;
+    const {localX, localY, scale} = canvasToWorkXY(cx, cy);
+    const rCanvas = Number(modal.querySelector('#eraseSize')?.value || 24);
+    const r = Math.max(1, rCanvas / Math.max(scale, 0.0001));
+    wctx.save();
+    wctx.globalCompositeOperation = 'destination-out';
+    wctx.beginPath();
+    wctx.arc(localX, localY, r, 0, Math.PI*2);
+    wctx.fill();
+    wctx.restore();
+  }
+
+  function drawCropSelectionOverlay(){
+    if(__cropState.mode !== 'crop') return;
+    const sel = __cropState.cropSel;
+    if(!sel || sel.w < 2 || sel.h < 2) return;
+    const ctx = __cropCtx;
+    ctx.save();
+    ctx.strokeStyle = '#00a3ff';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6,4]);
+    ctx.strokeRect(sel.x, sel.y, sel.w, sel.h);
+    ctx.fillStyle = 'rgba(0,163,255,0.12)';
+    ctx.fillRect(sel.x, sel.y, sel.w, sel.h);
+    ctx.restore();
+  }
+
+  // hook overlay into redraw
+  const __oldRedrawCrop = redrawCrop;
+  redrawCrop = function(){
+    __oldRedrawCrop();
+    drawCropSelectionOverlay();
+  };
+
+  canvas.addEventListener('mousedown', (e)=>{
+    if(__cropState.mode === 'move' || __cropState.mode === 'smart'){
+      __cropState.dragging = true;
+      __cropState.lastX = e.offsetX;
+      __cropState.lastY = e.offsetY;
+      return;
+    }
+    if(__cropState.mode === 'erase'){
+      __cropState.dragging = true;
+      eraseAt(e.offsetX, e.offsetY);
+      redrawCrop();
+      return;
+    }
+    if(__cropState.mode === 'crop'){
+      __cropState.selecting = true;
+      __cropState.selStartX = e.offsetX;
+      __cropState.selStartY = e.offsetY;
+      __cropState.cropSel = {x:e.offsetX, y:e.offsetY, w:0, h:0};
+      redrawCrop();
+      return;
+    }
+  });
+
+  window.addEventListener('mouseup', ()=>{
+    __cropState.dragging = false;
+    __cropState.selecting = false;
+  });
+
+  canvas.addEventListener('mousemove', (e)=>{
+    if(__cropState.mode === 'move' || __cropState.mode === 'smart'){
+      if(!__cropState.dragging) return;
+      const dx = e.offsetX - __cropState.lastX;
+      const dy = e.offsetY - __cropState.lastY;
+      __cropState.lastX = e.offsetX;
+      __cropState.lastY = e.offsetY;
+      __cropState.x += dx;
+      __cropState.y += dy;
+      redrawCrop();
+      return;
+    }
+    if(__cropState.mode === 'erase'){
+      if(!__cropState.dragging) return;
+      eraseAt(e.offsetX, e.offsetY);
+      redrawCrop();
+      return;
+    }
+    if(__cropState.mode === 'crop'){
+      if(!__cropState.selecting) return;
+      const x = Math.min(__cropState.selStartX, e.offsetX);
+      const y = Math.min(__cropState.selStartY, e.offsetY);
+      const w = Math.abs(e.offsetX - __cropState.selStartX);
+      const h = Math.abs(e.offsetY - __cropState.selStartY);
+      __cropState.cropSel = {x,y,w,h};
+      redrawCrop();
+      return;
+    }
+  });
+return modal;
+}
+
+function getBgUrl(el){
+  const bg = (el.style.backgroundImage || '').trim();
+  const m = bg.match(/url\(["']?(.*?)["']?\)/i);
+  return m ? m[1] : '';
+}
+
+let __cropTargetEl = null;
+
+function openCropModal(picEl){
+  const url = picEl.dataset.originalUrl || getBgUrl(picEl);
+  if(!url){
+    alert('此圖片框尚未有圖片，請先上傳圖片。');
+    return;
+  }
+  if(!__cropModal) createCropModal();
+
+  __cropTargetEl = picEl;
+  __cropState.size = parseInt(picEl.dataset.cropSize || '420', 10) || 420;
+
+  const img = new Image();
+  img.onload = ()=>{
+    __cropImg = img;
+
+    // 建立工作畫布（智慧選取會在此畫布上去背）
+    const wc = document.createElement('canvas');
+    wc.width = img.naturalWidth || img.width;
+    wc.height = img.naturalHeight || img.height;
+    const wctx = wc.getContext('2d');
+    wctx.drawImage(img, 0, 0);
+    __cropState.workCanvas = wc;
+    __cropState.workCtx = wctx;
+
+    // 初始化：先計算「剛好覆蓋裁切框」的 base，再用 zoom(0.5~1.5) 來做相對縮放
+    const cw = __cropCanvas.width;
+    const ch = __cropCanvas.height;
+    const base = Math.max(cw / img.width, ch / img.height);
+    __cropState.base = base;
+
+    // 依需求：拉桿預設在中間(1.0)，可 -50% / +50%
+    __cropState.zoom = 1.0;
+    __cropState.x = 0;
+    __cropState.y = 0;
+
+    const zoom = __cropModal.querySelector('#cropZoom');
+    zoom.value = '1';
+    redrawCrop();
+
+    __cropModal.style.display = 'flex';
+  };
+  img.onerror = ()=>{
+    alert('圖片讀取失敗，請重新上傳。');
+  };
+  img.src = url;
+}
+
+function closeCropModal(){
+  if(__cropModal) __cropModal.style.display = 'none';
+  __cropTargetEl = null;
+}
+
+function redrawCrop(){
+  if(!__cropCtx || !__cropCanvas) return;
+  const ctx = __cropCtx;
+  const cw = __cropCanvas.width;
+  const ch = __cropCanvas.height;
+
+  ctx.clearRect(0,0,cw,ch);
+
+  // 先畫底
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0,0,cw,ch);
+
+  if(!__cropImg) return;
+
+  // 置中為基準 + 偏移
+  const x = cw/2 + __cropState.x;
+  const y = ch/2 + __cropState.y;
+
+  const scale = (__cropState.base || 1) * (__cropState.zoom || 1);
+
+  const src = (__cropState.workCanvas || __cropImg);
+  const sw = src.width;
+  const sh = src.height;
+  const w = sw * scale;
+  const h = sh * scale;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.drawImage(src, -w/2, -h/2, w, h);
+  ctx.restore();
+
+  // 裁切框提示（圓形）
+  ctx.save();
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+  ctx.lineWidth = 3;
+  const r = Math.min(cw, ch)/2 - 8;
+  ctx.beginPath();
+  ctx.arc(cw/2, ch/2, r, 0, Math.PI*2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function applyCropToTarget(){
+  if(!__cropTargetEl || !__cropCanvas) return;
+
+  // 裁切（矩形）：先把 workCanvas 裁成選取框，再以新工作圖繼續套用（沿用原本「圓形輸出」規則）
+  if(__cropState.mode === 'crop' && __cropState.cropSel && __cropState.cropSel.w > 2 && __cropState.cropSel.h > 2 && __cropState.workCanvas){
+    const sel = __cropState.cropSel;
+    const cw = __cropCanvas.width, ch = __cropCanvas.height;
+    const x0 = cw/2 + __cropState.x;
+    const y0 = ch/2 + __cropState.y;
+    const scale = (__cropState.base || 1) * (__cropState.zoom || 1);
+    const src = __cropState.workCanvas;
+    const sw = src.width, sh = src.height;
+
+    // 轉成 workCanvas 座標
+    let sx = (sel.x - x0) / scale + sw/2;
+    let sy = (sel.y - y0) / scale + sh/2;
+    let ex = (sel.x + sel.w - x0) / scale + sw/2;
+    let ey = (sel.y + sel.h - y0) / scale + sh/2;
+
+    // 正規化 & clamp
+    let x1 = Math.max(0, Math.min(sw, Math.min(sx, ex)));
+    let y1 = Math.max(0, Math.min(sh, Math.min(sy, ey)));
+    let x2 = Math.max(0, Math.min(sw, Math.max(sx, ex)));
+    let y2 = Math.max(0, Math.min(sh, Math.max(sy, ey)));
+
+    const w2 = Math.max(1, Math.floor(x2 - x1));
+    const h2 = Math.max(1, Math.floor(y2 - y1));
+
+    const outWc = document.createElement('canvas');
+    outWc.width = w2;
+    outWc.height = h2;
+    const outCtx = outWc.getContext('2d');
+    outCtx.drawImage(src, x1, y1, w2, h2, 0, 0, w2, h2);
+
+    __cropState.workCanvas = outWc;
+    __cropState.workCtx = outCtx;
+
+    // 重新計算 base / reset 位移縮放，讓裁切後的圖回到置中可調
+    __cropState.x = 0;
+    __cropState.y = 0;
+    __cropState.zoom = 1.0;
+    __cropState.base = Math.max(cw / outWc.width, ch / outWc.height);
+    const zoomEl = __cropModal?.querySelector('#cropZoom');
+    if(zoomEl) zoomEl.value = '1';
+
+    // 清掉選取框
+    __cropState.cropSel = null;
+    // 重新繪製一次（可避免邊界閃爍）
+    redrawCrop();
+  }
+
+
+  // 取出中心圓形裁切 → 輸出成正方形，再用 CSS 圓形顯示
+  const outSize = __cropState.size || 420;
+  const out = document.createElement('canvas');
+  out.width = outSize;
+  out.height = outSize;
+  const octx = out.getContext('2d');
+
+  // 白底（避免縮小後出現灰底）
+  octx.fillStyle = '#ffffff';
+  octx.fillRect(0,0,outSize,outSize);
+
+  // 把 cropCanvas 的中心區域縮放到 out
+  const cw = __cropCanvas.width;
+  const ch = __cropCanvas.height;
+  const srcSize = Math.min(cw, ch) - 16; // 與提示圈一致
+  const sx = (cw - srcSize)/2;
+  const sy = (ch - srcSize)/2;
+
+  // 圓形遮罩
+  octx.save();
+  octx.beginPath();
+  octx.arc(outSize/2, outSize/2, outSize/2, 0, Math.PI*2);
+  octx.closePath();
+  octx.clip();
+
+  octx.drawImage(__cropCanvas, sx, sy, srcSize, srcSize, 0, 0, outSize, outSize);
+  octx.restore();
+
+  const dataUrl = out.toDataURL('image/png');
+  __cropTargetEl.style.backgroundImage = `url("${dataUrl}")`;
+  __cropTargetEl.style.backgroundSize = 'cover';
+  __cropTargetEl.style.backgroundPosition = 'center';
+  // 只移除 placeholder，不要動到 badge/其他子節點
+  __cropTargetEl.querySelectorAll('.pic-placeholder').forEach(n=>n.remove());
+  // 移除純文字 '圖片區'（若有）
+  Array.from(__cropTargetEl.childNodes).forEach(n=>{
+    if(n.nodeType === 3 && (n.textContent || '').trim() === '圖片區') n.remove();
+  });
+  __cropTargetEl.dataset.croppedUrl = dataUrl;
+
+  closeCropModal();
+}
+
+
+
+// ====== inline 圖片替換（只處理文字中的檔名，不影響其他功能） ======
+// 規則：只替換被雙引號框起來的檔名，例如："福.png"；取代時連同引號一起取代
+function replaceInlineFilenameWithImage(containerEl, filename, url){
+  if(!containerEl || !filename || !url) return;
+  if(containerEl.closest('.toolbar-float') || containerEl.closest('.detail-panel') || containerEl.closest('.crop-modal')) return;
+
+  const escapeRegExp = (s)=> (s || '').toString().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // 只匹配被雙引號框住的檔名（大小寫不敏感，用於支援 福.PNG / 福.png）
+  const pat = '"' + escapeRegExp(filename.toString()) + '"';
+  const testRe = new RegExp(pat, 'i');
+  const replRe = new RegExp(pat, 'gi');
+
+  const walker = document.createTreeWalker(containerEl, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      return node.nodeValue && testRe.test(node.nodeValue)
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT;
+    }
+  });
+
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(tn=>{
+    const text = tn.nodeValue || '';
+    let last = 0;
+    let match;
+    const frag = document.createDocumentFragment();
+
+    replRe.lastIndex = 0;
+    while((match = replRe.exec(text)) !== null){
+      const idx = match.index;
+      const end = idx + match[0].length;
+
+      const before = text.slice(last, idx);
+      if(before) frag.appendChild(document.createTextNode(before));
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = filename.toString();
+      img.style.height = '1.1em';          // +10%
+      img.style.verticalAlign = 'middle';
+      img.style.display = 'inline-block';
+      img.style.margin = '0 2px';
+      frag.appendChild(img);
+
+      last = end;
+    }
+
+    const after = text.slice(last);
+    if(after) frag.appendChild(document.createTextNode(after));
+
+    tn.parentNode.replaceChild(frag, tn);
+  });
+}
+
+
+function triggerImageUpload(){
+  const input = document.getElementById('imageInput');
+  if(!input) return;
+  input.value = '';
+  input.click();
+}
+
+function triggerWorkorderUpload(){
+  const input = document.getElementById('workorderInput');
+  if(!input) return;
+  input.value = '';
+  input.click();
+}
+
+function toggleDetailPanel(){
+  const p = document.getElementById('detailPanel');
+  if(!p) return;
+  p.style.display = (p.style.display === 'none' || p.style.display === '') ? 'block' : 'none';
+}
+
+/* 工單：簡單 JSON 套用（可擴充） */
+function applyWorkorder(data){
+  const map = {
+    bigPrize1Name: '.big-prize-wrap .big-prize:nth-of-type(1) .big-prize-name',
+    bigPrize1Price: '.big-prize-wrap .big-prize:nth-of-type(1) .big-prize-price',
+    bigPrize1Info: '.big-prize-wrap .big-prize:nth-of-type(1) .big-prize-info',
+    bigPrize2Name: '.big-prize-wrap .big-prize:nth-of-type(2) .big-prize-name',
+    bigPrize2Price: '.big-prize-wrap .big-prize:nth-of-type(2) .big-prize-price',
+    bigPrize2Info: '.big-prize-wrap .big-prize:nth-of-type(2) .big-prize-info',
+  };
+  Object.keys(map).forEach(k=>{
+    if(data && typeof data[k] !== 'undefined'){
+      const el = document.querySelector(map[k]);
+      if(el) el.textContent = String(data[k]);
+    }
+  });
+}
+
+function applyBadgeText(){
+  const top = document.getElementById('badgeTextTop')?.value ?? '日期';
+  const bottom = document.getElementById('badgeTextBottom')?.value ?? '限定';
+  document.querySelectorAll('.limit-badge .badge-top').forEach(el=>el.textContent = top);
+  document.querySelectorAll('.limit-badge .badge-bottom').forEach(el=>el.textContent = bottom);
+}
+
+function applyBadgeStyle(){
+  const size = parseFloat(document.getElementById('badgeSize')?.value ?? 92);
+  const font = parseFloat(document.getElementById('badgeFont')?.value ?? 28);
+  const top = parseFloat(document.getElementById('badgeTop')?.value ?? -8);
+  const right = parseFloat(document.getElementById('badgeRight')?.value ?? -26);
+  const tailSize = parseFloat(document.getElementById('tailSize')?.value ?? 14);
+  const tailJoin = parseFloat(document.getElementById('tailJoin')?.value ?? 0);
+  const tailLeft = parseFloat(document.getElementById('tailLeft')?.value ?? 10);
+  const dir = document.getElementById('tailDir')?.value ?? 'bl';
+
+  document.querySelectorAll('.limit-badge').forEach(b=>{
+    b.style.setProperty('--badge-size', size + 'px');
+    b.style.setProperty('--badge-font', font + 'px');
+    b.style.setProperty('--badge-top', top + 'px');
+    b.style.setProperty('--badge-right', right + 'px');
+    b.style.setProperty('--tail-size', tailSize + 'px');
+    b.style.setProperty('--tail-join', tailJoin + 'px');
+    b.style.setProperty('--tail-left', tailLeft + 'px');
+
+    
+    const angle = parseFloat(document.getElementById('tailAngle')?.value ?? 22);
+    b.style.setProperty('--tail-angle', angle + 'deg');
+b.classList.remove('dir-bl','dir-br','dir-tl','dir-tr');
+    b.classList.add('dir-' + dir);
+  });
+}
+
+
+function applyTextLineHeight(){
+  const nameLH = parseFloat(document.getElementById('nameLineHeight')?.value ?? 1.2);
+  const priceLH = parseFloat(document.getElementById('priceLineHeight')?.value ?? 1.15);
+
+  document.documentElement.style.setProperty('--name-line-height', String(nameLH));
+  document.documentElement.style.setProperty('--price-line-height', String(priceLH));
+}
+
+async function downloadAsImage(){
+  const target = document.querySelector('.page');
+  if(!target){
+    alert('找不到要下載的區塊（.page）');
+    return;
+  }
+  if(typeof html2canvas === 'undefined'){
+    alert('下載圖片需要可用的 html2canvas（請確保可連網載入 CDN）');
+    return;
+  }
+
+  // 下載時隱藏：剪刀與換圖 icon
+  const hideEls = Array.from(document.querySelectorAll('.pic-edit-btn, .pic-replace-btn'));
+  const prevDisplays = hideEls.map(el => el.style.display);
+  hideEls.forEach(el => el.style.display = 'none');
+
+  const prevSelected = __selectedPicEl;
+  document.querySelectorAll('.pic-selected').forEach(x=>x.classList.remove('pic-selected'));
+
+  try{
+    const canvas = await html2canvas(target, {scale: 2, useCORS: true, backgroundColor: null});
+    const link = document.createElement('a');
+    link.download = 'export.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }catch(e){
+    console.error(e);
+    alert('下載失敗：' + (e && e.message ? e.message : e));
+  }finally{
+    // 還原 icon 顯示
+    hideEls.forEach((el, i)=> el.style.display = prevDisplays[i] || '');
+    if(prevSelected) setSelectedPic(prevSelected);
+  }
+}
+
+
+
+/* =====================================================
+   Excel 工單（寫死只吃 MS 頁簽）
+   - 從 A欄找到「蝦幣夾夾樂大獎機台」那一列後開始套用
+   - A欄：對應 class/id/selector（若是多個 class 用空白分隔，會轉成 .a.b）
+   - B欄：忽略
+   - C欄：左/第一個值
+   - D欄：右/第二個值（可能為空）
+   - 特規：prize-card 組（prize-pic pic-selectable / pill / price-line / count-line）
+           若 D 欄為空 → 該組置中，右側 prize-card 隱藏
+===================================================== */
+let __workorderImageKeyToPicEls = new Map();
+let __coinImageFileName = '蝦幣icon.png'; // 工單 A欄=蝦幣圖片 時，C欄指定要抓的檔名
+   // normalized key -> [picEls...]
+
+function normalizeSelectorFromA(a){
+  a = (a || '').toString().trim();
+  if(!a) return '';
+  if(a.startsWith('.') || a.startsWith('#') || a.startsWith('[')) return a;
+  if(a.includes('>') || a.includes(':') || a.includes('[') || a.includes('#')) return a;
+  const parts = a.split(/\s+/).filter(Boolean);
+  if(parts.length === 1) return '.' + parts[0];
+  return '.' + parts.join('.');
+}
+
+function normalizeKey(s){
+  if(!s) return '';
+  let t = (''+s).trim().toLowerCase();
+
+  // 去副檔名
+  t = t.replace(/\.(png|jpe?g|webp|gif)$/i, '');
+
+  // 去常見數量/單位（避免品名含規格導致配不到）
+  t = t.replace(/\d+(?:\.\d+)?\s*(?:g|kg|ml|l|入|包|盒|袋|組|顆|片)/gi, '');
+
+  // 移除所有非「中英數」字元（包含空白、/、，等標點）
+  t = t.replace(/[^0-9a-z\u4e00-\u9fff]+/g, '');
+
+  return t;
+}
+
+function setText(el, v){
+  if(!el) return;
+  const val = (v ?? '').toString();
+  if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = val;
+  else el.textContent = val;
+}
+
+
+function normalizeTextForMatch(s){
+  return (s || '').toString()
+    .replace(/&nbsp;/g,' ')
+    .replace(/\u00a0/g,' ')
+    .replace(/\s+/g,' ')
+    .trim()
+    .toLowerCase();
+}
+function pickTargetByB(els, bVal){
+  if(!els || !els.length) return null;
+  const b = normalizeTextForMatch(bVal);
+  if(!b) return els[0];
+  const hit = els.find(el => normalizeTextForMatch(el.textContent) === b);
+  return hit || els[0];
+}
+
+
+function applyPairBySelector(selector, cVal, dVal){
+  const els = Array.from(document.querySelectorAll(selector));
+  if(!els.length) return;
+  if(cVal && cVal.trim() !== '') setText(els[0], cVal);
+  if(els.length >= 2 && dVal && dVal.trim() !== '') setText(els[1], dVal);
+}
+
+function registerPicKeyForEl(picEl, key){
+  const nk = normalizeKey(key);
+  if(!nk || !picEl) return;
+  if(!__workorderImageKeyToPicEls.has(nk)) __workorderImageKeyToPicEls.set(nk, []);
+  __workorderImageKeyToPicEls.get(nk).push(picEl);
+}
+
+function clearPrizeCardLayout(){
+  document.querySelectorAll('.prize-card.hidden').forEach(el=>el.classList.remove('hidden'));
+  document.querySelectorAll('.prize-card.single').forEach(el=>el.classList.remove('single'));
+}
+
+
+
+function applyWorkorderFromMSWorksheet(ws){
+  __workorderImageKeyToPicEls = new Map();
+  clearPrizeCardLayout();
+
+  const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+
+  // 起點：從 A 欄找到關鍵字「go」的下一行開始（取最後一個 go）；若沒有則從第一個 A 非空開始
+  let start = -1;
+  const marker = 'start';
+  // 取「第一個」start（由上往下），避免多段 start 時抓到錯段
+  for(let i=0;i<rows.length;i++){
+    const a = (rows[i]?.[0] ?? '').toString().trim();
+    if(a && a.toLowerCase() === marker){ start = i + 1; break; }
+  }
+if(start < 0){
+    for(let i=0;i<rows.length;i++){
+      const a = (rows[i]?.[0] ?? '').toString().trim();
+      if(a){ start = i; break; }
+    }
+  }
+  if(start < 0) start = 0;
+
+  // 若找到 start 但下一行已超出範圍，直接回退到最後一行（避免空讀）
+  if(start >= rows.length) start = rows.length - 1;
+
+  // ===== 1) tag-bar：依工單出現數量，對應既有 tag-bar；不足就自動新增 =====
+  const tagBarValues = [];
+
+  // 先找 A = tag-bar#start 的 C 欄，作為 tag-bar#1
+  let tagBarStartValue = '';
+  for(let r=0;r<rows.length;r++){
+    const a = (rows[r]?.[0] ?? '').toString().trim().toLowerCase();
+    if(a === 'tag-bar#start'){
+      tagBarStartValue = (rows[r]?.[2] ?? '').toString().trim(); // C 欄
+      break; // 只吃第一個
+    }
+  }
+  if(tagBarStartValue) tagBarValues.push(tagBarStartValue);
+
+  // 再從第一個 start 後開始往下掃 tag-bar；遇到下一個 start 就停止（避免吃到後段區塊的 tag-bar）
+  for(let r=start;r<rows.length;r++){
+    const rawA = (rows[r]?.[0] ?? '').toString().trim().toLowerCase();
+    if(rawA === 'start') break;
+    if(rawA === 'tag-bar'){
+      const cVal = (rows[r]?.[2] ?? '').toString().trim();
+      // 保持原本行為：只收有值的 C 欄
+      if(cVal) tagBarValues.push(cVal);
+    }
+  }
+const pageEl = document.querySelector('.page') || document.body;
+
+  // 清掉上次動態生成的 tag-bar（避免重複上傳工單時越長越多）
+  pageEl.querySelectorAll('.tag-bar[data-generated="1"]').forEach(el => el.remove());
+
+  // 重新抓一次既有 tag-bar
+  let tagEls = Array.from(document.querySelectorAll('.tag-bar'));
+
+  // 插入錨點：第 1 段（第一個 panel-outer）/ 第 2 段（第二個 panel-outer）/ 最下方說明（.note）
+  const panelOuters = Array.from(pageEl.querySelectorAll('.panel-outer'));
+  const anchors = [
+    panelOuters[0] || null,
+    panelOuters[1] || null,
+    pageEl.querySelector('.note') || null,
+  ].filter(Boolean);
+
+  // 更新既有的
+  for(let i=0;i<Math.min(tagEls.length, tagBarValues.length);i++){
+    setText(tagEls[i], tagBarValues[i]);
+  }
+
+  // 不足就複製最後一個 tag-bar（只新增 tag-bar 本身，不影響既有 layout）
+  // 但改成插入到指定錨點前，而不是一律 append 到頁尾
+  if(tagBarValues.length > tagEls.length){
+    const tmpl = tagEls[tagEls.length-1] || null;
+    for(let i=tagEls.length;i<tagBarValues.length;i++){
+      const el = tmpl ? tmpl.cloneNode(true) : document.createElement('div');
+      if(!tmpl) el.className = 'tag-bar';
+      el.dataset.generated = '1';
+      setText(el, tagBarValues[i]);
+
+      const anchor = anchors[Math.min(i, anchors.length - 1)];
+      pageEl.insertBefore(el, anchor);
+      tagEls.push(el);
+    }
+  }
+
+
+  // ===== 2) 依 A/B/C 對應，套文字到既有 DOM（非 prize-grid 部分）=====
+  // 這段維持原本做法：用 B 欄（目前 html 的名字）定位，找到同一行對應的 class，套 C 欄
+  const allPicEls = Array.from(document.querySelectorAll('.pic-selectable'));
+  const safeTrim = (v)=> (v ?? '').toString().replace(/\u3000/g,' ').trim();
+
+  // big-prize 圖片在工單 B 欄常無法唯一定位（兩格都叫「圖片區」），因此用出現順序來對應
+  let __bigPrizePicCursor = 0;
+  let __bigPrizeNameCursor = 0;
+  let __lastBigPrizePicKey = '';
+  let __bigPrizePriceCursor = 0;
+  let __bigPrizeBadgeTopCursor = 0;
+  let __bigPrizeBadgeBottomCursor = 0;
+
+  // prize-grid 我們後面重建，因此先略過其內文填值
+  const shouldSkipInGeneric = (cls)=> (cls === 'prize-pic pic-selectable' || cls === 'pill' || cls === 'price-line' || cls === 'count-line');
+
+  for(let r=start;r<rows.length;r++){
+    const rawA = safeTrim(rows[r]?.[0]);
+    const rawB = safeTrim(rows[r]?.[1]);
+    const cVal = safeTrim(rows[r]?.[2]);
+
+    if(!rawA) continue;
+
+    // 工單特規：蝦幣圖片（A欄=蝦幣圖片；C欄=檔名，例如：蝦幣.png）
+    if(rawA === '蝦幣圖片'){
+      if(cVal) __coinImageFileName = cVal;
+      continue;
+    }
+    if(shouldSkipInGeneric(rawA)) continue;
+
+    // 日期行只用來產生 date-tag（在 prize-grid 重建用），這裡略過
+    if(rawA === 'big-prize-name' && rawB === '日期') continue;
+
+
+    // big-prize-pic：兩個圖片框 B 欄文字常相同，改用工單出現順序依序對應第 1/2 個 .big-prize-pic
+    if(rawA === 'big-prize-pic pic-selectable'){
+      const pics = Array.from(document.querySelectorAll('.big-prize-pic'));
+      const targetPic = pics[__bigPrizePicCursor] || pics[pics.length - 1];
+      __bigPrizePicCursor = Math.min(__bigPrizePicCursor + 1, pics.length);
+      if(targetPic && cVal){
+        __lastBigPrizePicKey = cVal; // 供後續 big-prize-name 空值時 fallback
+        registerPicKeyForEl(targetPic, cVal);
+      }
+      continue;
+    }
+
+    // big-prize-name：工單 C 欄常為空，改用上一個 big-prize-pic 的 C 值當 fallback
+    if(rawA === 'big-prize-name'){
+      const names = Array.from(document.querySelectorAll('.big-prize-name'));
+      const targetName = names[__bigPrizeNameCursor] || names[names.length - 1];
+      __bigPrizeNameCursor = Math.min(__bigPrizeNameCursor + 1, names.length);
+      const v = cVal || __lastBigPrizePicKey;
+      if(targetName && v) setText(targetName, v);
+      continue;
+    }
+
+    // 限定」自動拆兩行（top/bottom）
+// badge-top 在大獎區有兩組，需依出現順序對應到第 1 / 第 2 組
+if(rawA === 'badge-top'){
+  const tops = Array.from(document.querySelectorAll('.big-prize .badge-top'));
+  const targetTop = tops[__bigPrizeBadgeTopCursor] || tops[tops.length - 1];
+  __bigPrizeBadgeTopCursor = Math.min(__bigPrizeBadgeTopCursor + 1, tops.length);
+  if(!targetTop) continue;
+
+  const parts = cVal.split(/\s+/).filter(Boolean);
+  const top = parts[0] || '';
+  const bottom = parts.slice(1).join('') || '';
+
+  setText(targetTop, top);
+
+  const badge = targetTop.closest('.limit-badge') ? targetTop.closest('.limit-badge') : null;
+  const bottomEl = badge ? badge.querySelector('.badge-bottom') : null;
+  if(bottomEl) setText(bottomEl, bottom);
+  continue;
+}
+
+
+    // 一般 class：優先用 B 欄在畫面上找到對應節點（文字相等者）
+    let target = null;
+    if(rawB){
+      const candidates = Array.from(document.querySelectorAll('.' + rawA.split(' ')[0].replace(/\./g,'')));
+      // 以文字命中為主
+      for(const el of candidates){
+        const t = safeTrim(el.textContent);
+        if(t && t === rawB){ target = el; break; }
+      }
+    }
+    // 找不到就 fallback：第一個匹配 class
+    if(!target){
+      target = document.querySelector('.' + rawA.split(' ')[0].replace(/\./g,''));
+    }
+    if(!target) continue;
+
+    // 圖片類：只登記 key -> 元素，等上傳圖片時用「包含」匹配
+    if(rawA.includes('pic-selectable')){
+      if(cVal){
+        registerPicKeyForEl(target, cVal);
+      }
+      // 若文字是 placeholder，不清空 badge，僅移除 placeholder（由上傳圖片時處理）
+      continue;
+    }
+
+    // big-prize-price：可拆「價值 / 共X名」
+    if(rawA === 'big-prize-price'){
+      const prices = Array.from(document.querySelectorAll('.big-prize-price'));
+      const targetPrice = prices[__bigPrizePriceCursor] || prices[prices.length - 1];
+      __bigPrizePriceCursor = Math.min(__bigPrizePriceCursor + 1, prices.length);
+
+      if(targetPrice){
+        const lines = cVal.split(/\n+/).map(s=>safeTrim(s)).filter(Boolean);
+        const priceLine = lines[0] || cVal;
+        const infoLine = lines[1] || '';
+        if(priceLine) setText(targetPrice, priceLine);
+        const infoEl = targetPrice.parentElement ? targetPrice.parentElement.querySelector('.big-prize-info') : null;
+        if(infoEl && infoLine) setText(infoEl, infoLine);
+      }
+      continue;
+    }
+
+    // 其他文字
+    if(cVal) setText(target, cVal);
+  }
+
+  // ===== 3) prize-grid：每 4 行為一排（prize-pic / pill / price-line / count-line），自動新增多排；中間插入 date-tag =====
+  
+  // ===== 3) prize-grid：依工單由上到下串流渲染（date-tag 為獨立一行）=====
+  const firstGrid = document.querySelector('.prize-grid');
+  if(firstGrid){
+    const panel = firstGrid.parentElement;
+    const dateTmpl = panel ? panel.querySelector('.date-tag') : null;
+
+    // end marker：原本 prize-grid 後面緊接的下一段（通常是下一個 section-title / coin 區塊）
+    const endMarker = firstGrid.nextElementSibling;
+
+    // ===== 3-1) 解析工單：遇到 date-tag 開新段，遇到 prize-pic 產生一排商品（左右各一張）=====
+    let p = start;
+    // 找到 prize 區塊的第一個 date-tag 或 prize-pic
+    while(p < rows.length){
+      const a = safeTrim(rows[p]?.[0]);
+      if(a === 'date-tag' || a === 'prize-pic pic-selectable') break;
+      p++;
+    }
+
+    // 讀到遇到下一個主要段落（蝦幣段 / 下一個 tag-bar）就停止
+    const stopAt = (idx)=>{
+      const a = safeTrim(rows[idx]?.[0]);
+      const c = safeTrim(rows[idx]?.[2]);
+      if(a === 'tag-bar') return true;
+      if(a === 'section-title' && c === '蝦幣') return true;
+      return false;
+    };
+
+    const segments = [];
+    let curDate = '';
+    let curItems = [];
+
+    const pushSeg = ()=>{
+      if(curDate || curItems.length){
+        segments.push({ date: curDate, items: curItems });
+      }
+    };
+
+    while(p < rows.length && !stopAt(p)){
+      const a = safeTrim(rows[p]?.[0]);
+      const b = safeTrim(rows[p]?.[1]);
+      const c = safeTrim(rows[p]?.[2]);
+      const d = safeTrim(rows[p]?.[3]);
+
+      if(a === 'date-tag' && c){
+        pushSeg();
+        curDate = c;
+        curItems = [];
+        p++;
+        continue;
+      }
+
+      if(a !== 'prize-pic pic-selectable'){ p++; continue; }
+
+      // 讀這一排（prize-pic / pill / price-line / count-line），中途若遇到下一個 date-tag 或下一個 prize-pic 就結束
+      const rowPic = { L: c, R: d };
+
+      let pillRowIdx = null, priceRowIdx = null, countRowIdx = null;
+      let nextP = p + 1;
+      for(let i=p+1;i<rows.length && i<p+10;i++){
+        const a2 = safeTrim(rows[i]?.[0]);
+        if(a2 === 'date-tag' || a2 === 'prize-pic pic-selectable'){
+          nextP = i;
+          break;
+        }
+        if(!pillRowIdx && a2 === 'pill'){ pillRowIdx = i; }
+        if(!priceRowIdx && a2 === 'price-line'){ priceRowIdx = i; }
+        if(!countRowIdx && a2 === 'count-line'){ countRowIdx = i; nextP = i + 1; break; }
+        nextP = i + 1;
+      }
+
+      const pillRow = (pillRowIdx != null) ? rows[pillRowIdx] : [];
+      const priceRow = (priceRowIdx != null) ? rows[priceRowIdx] : [];
+      const countRow = (countRowIdx != null) ? rows[countRowIdx] : [];
+
+      const pillL = safeTrim(pillRow[2]) || rowPic.L;   // 工單常空：fallback 用圖片 key
+      const pillR = safeTrim(pillRow[3]) || rowPic.R;
+      const priceL = safeTrim(priceRow[2]);
+      const priceR = safeTrim(priceRow[3]);
+      const countL = safeTrim(countRow[2]);
+      const countR = safeTrim(countRow[3]);
+
+      curItems.push({
+        L: { picKey: rowPic.L, pill: pillL, price: priceL, count: countL },
+        R: { picKey: rowPic.R, pill: pillR, price: priceR, count: countR },
+      });
+
+      p = nextP;
+    }
+    pushSeg();
+
+    // ===== 3-2) 清掉舊的 date-tag / prize-grid（只清 prize 區塊範圍，不動其他段落）=====
+    // 若找得到 endMarker，則移除 dateTmpl ~ endMarker 之前的所有 date-tag / prize-grid
+    if(panel){
+      const startNode = dateTmpl || firstGrid;
+      if(endMarker){
+        let n = startNode;
+        while(n && n !== endMarker){
+          const next = n.nextElementSibling;
+          n.remove();
+          n = next;
+        }
+      }else{
+        // fallback：只清掉 panel 內所有 date-tag / prize-grid
+        panel.querySelectorAll('.date-tag, .prize-grid').forEach(el=>el.remove());
+      }
+
+      // ===== 3-3) 依 segments 逐段插入：date-tag（獨立一行）+ prize-grid（多排）=====
+      const makeCard = (pill, price, count, picKey)=>{
+        const card = document.createElement('div');
+        card.className = 'prize-card';
+        const pic = document.createElement('div');
+        pic.className = 'prize-pic pic-selectable';
+        pic.innerHTML = '<div class="pic-placeholder">圖片區</div>';
+        const pillEl = document.createElement('div');
+        pillEl.className = 'pill';
+        pillEl.textContent = pill || '品名';
+        const priceEl = document.createElement('div');
+        priceEl.className = 'price-line';
+        priceEl.textContent = price || '價值 $000';
+        const countEl = document.createElement('div');
+        countEl.className = 'count-line';
+        countEl.textContent = count || '共 000 名';
+
+        card.appendChild(pic);
+        card.appendChild(pillEl);
+        card.appendChild(priceEl);
+        card.appendChild(countEl);
+
+        if(picKey){
+          registerPicKeyForEl(pic, picKey);
+        }
+        return card;
+      };
+
+      const insertBeforeNode = endMarker || null;
+
+      segments.forEach(seg=>{
+        // date-tag：保持與第一行相同的「獨立一行」樣式（clone 模板，不改 style）
+        const dt = dateTmpl ? dateTmpl.cloneNode(true) : document.createElement('div');
+        dt.className = 'date-tag';
+        dt.textContent = seg.date || '';
+        panel.insertBefore(dt, insertBeforeNode);
+
+        const gridEl = document.createElement('div');
+        gridEl.className = 'prize-grid';
+
+        (seg.items || []).forEach(row=>{
+          if(row.L && row.L.picKey) gridEl.appendChild(makeCard(row.L.pill, row.L.price, row.L.count, row.L.picKey));
+          if(row.R && row.R.picKey) gridEl.appendChild(makeCard(row.R.pill, row.R.price, row.R.count, row.R.picKey));
+        });
+
+        panel.insertBefore(gridEl, insertBeforeNode);
+      });
+    }
+  }
+
+  // 重新綁定：動態新增的 pic-selectable 需要選取與剪刀 UI
+  initPicSelection();
+
+  // ====== 補：圖片手動換圖按鈕（剪刀下方） ======
+  (function initPicReplaceButton(){
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.style.display = 'none';
+    document.body.appendChild(input);
+
+    let pendingPicEl = null;
+    input.addEventListener('change', ()=>{
+      const f = input.files && input.files[0];
+      if(f && pendingPicEl){
+        applyImageToPicEl(pendingPicEl, f);
+      }
+      pendingPicEl = null;
+      input.value = '';
+    });
+
+    document.querySelectorAll('.pic-selectable').forEach(picEl=>{
+      // 避免重複建立
+      if(picEl.querySelector('.pic-replace-btn')) return;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pic-replace-btn';
+      btn.setAttribute('aria-label', '換圖');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0114.13-3.36L23 10M1 14l5.36 4.36A9 9 0 0020.49 15"></path></svg>`;
+
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        pendingPicEl = picEl;
+        input.click();
+      });
+
+      picEl.appendChild(btn);
+    });
+  })();
+
+  ensurePicEditorUI();
+
+}
+
+
+
+function applyImageToPicEl(picEl, file){
+  // 先判斷：若上傳的是「蝦幣圖片檔」（工單指定檔名），只允許套用到 coin 區塊，避免誤套到商品圖/名稱
+  const expectedCoinKey = normalizeKey(__coinImageFileName || '蝦幣icon.png');
+  const fileKey = normalizeKey(file?.name || '');
+  const isCoinFile = (expectedCoinKey && fileKey && fileKey === expectedCoinKey);
+
+  // 保護標記的圖片（例如蝦幣 icon）：
+  // - 只有當上傳檔名符合「工單指定的檔名」(A欄=蝦幣圖片 的 C欄) 時，才允許替換該 <img>
+  // - 若工單未指定，預設仍為「蝦幣icon.png」
+  // - 其他情況一律不動
+  const protectedImg = picEl && picEl.querySelector && picEl.querySelector('[data-protect-image="1"]');
+  if(protectedImg){
+    if(isCoinFile){
+      const url = URL.createObjectURL(file);
+      protectedImg.src = url;
+    }
+    return;
+  }
+
+  // 若是蝦幣圖片檔但目前不是 coin 區塊，直接略過（避免誤套到商品圖）
+  if(isCoinFile) return;
+
+  const url = URL.createObjectURL(file);
+  picEl.dataset.originalUrl = url;      // 供剪裁使用
+  picEl.dataset.originalName = file.name || '';
+  picEl.style.backgroundImage = `url("${url}")`;
+  picEl.style.backgroundSize = 'cover';
+  picEl.style.backgroundPosition = 'center';
+  // 只移除圖片區 placeholder，不要把徽章等子節點清掉
+  const ph = picEl.querySelector('.pic-placeholder');
+  if(ph) ph.remove();
+  // 清掉殘留的純文字節點（避免影響排版）
+  [...picEl.childNodes].forEach(n => {
+    if(n.nodeType === Node.TEXT_NODE && !n.textContent.trim()) n.textContent = '';
+    if(n.nodeType === Node.TEXT_NODE && n.textContent.trim()) n.textContent = '';
+  });
+}
+
+
+function findTargetsFromWorkorderByFile(fileName){
+  const nk = normalizeKey(fileName);
+  if(!nk) return [];
+
+  // 蝦幣 icon 檔名只允許套用在指定區塊（.coin-image-wrap），不參與商品圖/工單對應
+  const expectedCoinName = normalizeKey(__coinImageFileName || '蝦幣icon.png');
+  if(expectedCoinName && nk === expectedCoinName) return [];
+
+
+  // 1) 精準比對
+  if(__workorderImageKeyToPicEls.has(nk)) return __workorderImageKeyToPicEls.get(nk);
+
+  // 2) 模糊比對（加上「最佳分數」挑選，避免同前綴商品誤配，例如 KANGOL*）
+  const MIN_FUZZY_LEN = 2;
+  if(nk.length < MIN_FUZZY_LEN) return [];
+
+  // 最長共同子字串長度（用來分辨同前綴的差異）
+  function lcsLen(a,b){
+    const n=a.length, m=b.length;
+    const dp = new Array(m+1).fill(0);
+    let best=0;
+    for(let i=1;i<=n;i++){
+      let prev=0;
+      for(let j=1;j<=m;j++){
+        const tmp = dp[j];
+        if(a[i-1] === b[j-1]){
+          dp[j] = prev + 1;
+          if(dp[j] > best) best = dp[j];
+        }else{
+          dp[j] = 0;
+        }
+        prev = tmp;
+      }
+    }
+    return best;
+  }
+
+  let bestEls = [];
+  let bestScore = -1;
+  let bestKeyLen = -1;
+
+  for(const [k, els] of __workorderImageKeyToPicEls.entries()){
+    if(!k || k.length < MIN_FUZZY_LEN) continue;
+
+    let score = -1;
+
+    // 2a) 互包含：以「命中長度」當分數（命中越長越優先）
+    if(k.includes(nk) || nk.includes(k)){
+      score = Math.min(k.length, nk.length);
+    }else{
+      // 2b) 子字串命中：取最大連續命中長度（門檻 4）
+      const common = lcsLen(k, nk);
+      if(common >= 4) score = common;
+    }
+
+    if(score > bestScore || (score === bestScore && k.length > bestKeyLen)){
+      bestScore = score;
+      bestKeyLen = k.length;
+      bestEls = els;
+    }
+  }
+
+  return bestEls || [];
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  initPicSelection();
+  ensurePicEditorUI();
+  applyBadgeText();
+  applyBadgeStyle();
+  applyTextLineHeight();
+
+  // ====== 明確補上：coin-btn 內容可編輯 ======
+  document.querySelectorAll('.coin-btn, .coin-btn *').forEach(el=>{
+    if(el.closest('.toolbar-float') || el.closest('.detail-panel') || el.closest('.crop-modal')) return;
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('spellcheck', 'false');
+  });
+
+
+  // ====== 全頁所有文字可直接編輯（不改樣式/不改版面；略過工具列/彈窗/按鈕/輸入等） ======
+  (function makeAllTextEditable(){
+    const root = document.querySelector('.page') || document.body;
+    const SKIP_TAGS = new Set(['BUTTON','INPUT','TEXTAREA','SELECT','OPTION','SCRIPT','STYLE','CANVAS','SVG','PATH','IMG']);
+    const SKIP_WITHIN = ['.toolbar-float', '.detail-panel', '.crop-modal'];
+
+    function isInsideSkipArea(el){
+      return SKIP_WITHIN.some(sel => el.closest(sel));
+    }
+    function hasTextNode(el){
+      for(const n of el.childNodes){
+        if(n.nodeType === Node.TEXT_NODE && (n.textContent || '').trim() !== '') return true;
+      }
+      return false;
+    }
+    function walk(el){
+      if(!el || el.nodeType !== 1) return;
+      if(SKIP_TAGS.has(el.tagName)) return;
+      if(isInsideSkipArea(el)) return;
+
+      if(hasTextNode(el)){
+        el.setAttribute('contenteditable', 'true');
+        el.setAttribute('spellcheck', 'false');
+      }
+      for(const child of el.children) walk(child);
+    }
+    walk(root);
+  })();
+
+  // ====== 補強：動態產生的文字（例如第二區 prize-grid）也設為可編輯 ======
+  (function observeEditableText(){
+    const root = document.querySelector('.page') || document.body;
+    const SKIP_TAGS = new Set(['BUTTON','INPUT','TEXTAREA','SELECT','OPTION','SCRIPT','STYLE','CANVAS','SVG','PATH','IMG']);
+    const SKIP_WITHIN = ['.toolbar-float', '.detail-panel', '.crop-modal'];
+
+    function isInsideSkipArea(el){
+      return SKIP_WITHIN.some(sel => el.closest(sel));
+    }
+    function hasTextNode(el){
+      for(const n of el.childNodes){
+        if(n.nodeType === Node.TEXT_NODE && (n.textContent || '').trim() !== '') return true;
+      }
+      return false;
+    }
+    function applyEditable(el){
+      if(!el || el.nodeType !== 1) return;
+      if(SKIP_TAGS.has(el.tagName)) return;
+      if(isInsideSkipArea(el)) return;
+      if(hasTextNode(el)){
+        el.setAttribute('contenteditable', 'true');
+        el.setAttribute('spellcheck', 'false');
+      }
+    }
+
+    // 初始掃描
+    root.querySelectorAll('*').forEach(applyEditable);
+
+    // 監聽之後動態加入的節點（工單產生的第二區）
+    const mo = new MutationObserver(muts=>{
+      muts.forEach(m=>{
+        m.addedNodes && m.addedNodes.forEach(n=>{
+          if(n.nodeType === 1){
+            applyEditable(n);
+            n.querySelectorAll && n.querySelectorAll('*').forEach(applyEditable);
+          }
+        });
+      });
+    });
+    mo.observe(root, { childList: true, subtree: true });
+  })();
+
+
+  const imageInput = document.getElementById('imageInput');
+  if(imageInput){
+    imageInput.addEventListener('change', (e)=>{
+      const files = Array.from(e.target.files || []);
+      if(!files.length) return;
+
+      let used = 0;
+      
+for(const f of files){
+        // 蝦幣圖片：由工單指定檔名（A欄=蝦幣圖片；C欄=檔名，例如：蝦幣.png）
+        const expectedCoinKey = normalizeKey(__coinImageFileName || '蝦幣icon.png');
+        const isCoinIcon = (normalizeKey(f.name) === expectedCoinKey);
+
+        if(isCoinIcon){
+          const coinImg = document.querySelector('.coin-image-wrap img[data-protect-image="1"]');
+          if(coinImg){
+            coinImg.src = URL.createObjectURL(f);
+            used++;
+          }
+          // 不套用到商品圖片框
+          continue;
+        }
+
+        const targets = findTargetsFromWorkorderByFile(f.name);
+        if(targets && targets.length){
+          targets.forEach(t => applyImageToPicEl(t, f));
+          used++;
+        }
+
+        // 文字中的檔名（例如「福.png」）→ 替換為圖片
+        const url = URL.createObjectURL(f);
+        document.querySelectorAll('.page').forEach(root=>{
+          if(((f.name || '').toLowerCase() === '福.png')){
+            replaceInlineFilenameWithImage(root, f.name, url);
+          }
+        });
+      }
+
+      if(used === 0){
+
+        if(!__selectedPicEl){
+          alert('請先上傳工單（用檔名對應）或先點選要套用圖片的圖片區，再上傳圖片。');
+          return;
+        }
+        applyImageToPicEl(__selectedPicEl, files[0]);
+      }
+    });
+  }
+
+  const workorderInput = document.getElementById('workorderInput');
+  if(workorderInput){
+    workorderInput.addEventListener('change', async (e)=>{
+      const file = e.target.files && e.target.files[0];
+      if(!file) return;
+      const name = (file.name || '').toLowerCase();
+
+      try{
+        if(name.endsWith('.xlsx') || name.endsWith('.xls')){
+          if(typeof XLSX === 'undefined'){
+            alert('工單讀取需要 XLSX 解析庫（請確保可連網載入 xlsx CDN）');
+            return;
+          }
+          const ab = await file.arrayBuffer();
+          const wb = XLSX.read(ab, {type:'array'});
+
+          const msName = wb.SheetNames.find(n => n.trim().toLowerCase() === 'ms');
+          if(!msName){
+            alert('工單讀取失敗：找不到頁簽「MS」');
+            return;
+          }
+          const ws = wb.Sheets[msName];
+
+          applyWorkorderFromMSWorksheet(ws);
+          alert('工單已上傳並套用（Excel / MS）。');
+        }else{
+          const text = await file.text();
+          let data = null;
+          try{ data = JSON.parse(text); }catch(_){ data = { raw: text }; }
+          if(data && data.raw){
+            alert('工單已上傳（txt）。要自動套用請用 Excel（MS 頁簽）。');
+          }else{
+            applyWorkorder(data);
+            alert('工單已上傳並套用（JSON）。');
+          }
+        }
+      }catch(err){
+        console.error(err);
+        alert('工單讀取失敗：' + (err && err.message ? err.message : err));
+      }
+    });
+  }
+});
+</script>
+<script>
+function changeFontSizeDelta(selector, delta) {
+  const els = document.querySelectorAll(selector);
+  els.forEach(el => {
+    const cs = window.getComputedStyle(el);
+    const current = parseFloat(cs.fontSize);
+    if (isNaN(current)) return;
+    let next = current + delta;
+    if (next < 8) next = 8;
+    if (next > 80) next = 80;
+    el.style.fontSize = next + 'px';
+  });
+}
+function setFontSizeFromInput(input, selector) {
+  let val = parseFloat(input.value);
+  if (isNaN(val)) return;
+  if (val < 8) val = 8;
+  if (val > 80) val = 80;
+  input.value = val;
+  const els = document.querySelectorAll(selector);
+  els.forEach(el => {
+    el.style.fontSize = val + 'px';
+  });
+}
+</script>
+</body>
+</html>
