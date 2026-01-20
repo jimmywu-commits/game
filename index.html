@@ -6,24 +6,22 @@
 <title>蝦皮夾夾樂</title>
 <style>
 @font-face {
-  font-family: 'ShopeeNoto';
-  src: url('./fonts/ShopeeNotoSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'ShopeeNoto';
-  src: url('./fonts/ShopeeNotoSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'ShopeeNoto';
-  src: url('./fonts/ShopeeNotoSans-Bold.ttf') format('truetype');
+  font-family: 'ShopeeBold';
+  src: url('./程式檔案/ShopeeNotoSans(content)-Bold.ttf') format('truetype');
   font-weight: 700;
-  font-style: normal;
+}
+@font-face {
+  font-family: 'ShopeeMedium';
+  src: url('./程式檔案/ShopeeNotoSans(content)-Medium.ttf') format('truetype');
+  font-weight: 500;
 }
 
+
+@font-face {
+  font-family: 'ShopeeRegular';
+  src: url('./程式檔案/ShopeeNotoSans(content)-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
 /* 浮動工具列 */
 .toolbar-float {
   position: fixed;
@@ -66,9 +64,7 @@ body { padding-top: 60px; }
 /* Default: all text bold */
 body, div, p, span, strong, .tag-bar, .section-title,
 .note, .price-line, .count-line, .date-tag, .sub-label {
-  font-family: 'ShopeeNoto', -apple-system, BlinkMacSystemFont, \"Microsoft JhengHei\",
-    \"PingFang TC\", \"Helvetica Neue\", Arial, sans-serif;
-  font-weight: 700;
+  font-family: 'ShopeeBold';
 }
 .note{max-width:1200px;width:100%;margin:0 auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
 .note img{max-width:100%;height:auto;}
@@ -79,9 +75,9 @@ body, div, p, span, strong, .tag-bar, .section-title,
 
     body {
       margin: 0;
-      font-family: 'ShopeeNoto', -apple-system, BlinkMacSystemFont, "Microsoft JhengHei",
+      font-family: 'ShopeeBold', -apple-system, BlinkMacSystemFont, "Microsoft JhengHei",
         "PingFang TC", "Helvetica Neue", Arial, sans-serif;
-background: #3566d9;
+      background: #3566d9;
       display: flex;
       justify-content: center;
     }
@@ -346,7 +342,7 @@ min-width: 700px;
   background: rgba(255,255,255,0.14);
   color:#fff;
   font-size: 14px;
-  font-family: 'ShopeeNoto';
+  font-family: 'ShopeeBold';
   cursor:pointer;
   line-height: 1;
 }
@@ -366,7 +362,7 @@ min-width: 700px;
   border-radius: 18px;
   padding: 12px 12px 10px;
   color:#fff;
-  font-family: 'ShopeeNoto';
+  font-family: 'ShopeeBold';
 }
 .detail-title{
   font-size: 14px;
@@ -454,7 +450,7 @@ min-width: 700px;
   border-radius: 18px;
   padding: 16px;
   box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-  font-family: 'ShopeeNoto';
+  font-family: 'ShopeeBold';
 }
 .crop-head{
   display:flex;
@@ -471,7 +467,7 @@ min-width: 700px;
   border-radius: 999px;
   padding: 10px 14px;
   cursor:pointer;
-  font-family: 'ShopeeNoto';
+  font-family: 'ShopeeBold';
 }
 .crop-btn.primary{ background:#ff6f3c; color:#fff; }
 .crop-btn.secondary{ background: rgba(0,0,0,0.08); color:#111; }
