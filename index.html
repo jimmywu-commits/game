@@ -3,7 +3,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"/>
-<title>蝦皮夾夾樂v1.1</title>
+<title>蝦皮夾夾樂v1</title>
 <style>
 @font-face {
   font-family: 'ShopeeBold';
@@ -61,11 +61,42 @@
 }
 body { padding-top: 60px; }
 
-/* Default: all text bold */
-body, div, p, span, strong, .tag-bar, .section-title,
-.note, .price-line, .count-line, .date-tag, .sub-label {
+/* ===== Typography system (final) ===== */
+/* Default: 強調用 Bold（不要再全站鎖死） */
+.tag-bar,
+.section-title,
+.sub-label,
+.big-prize-price,
+.price-line,
+.count-line,
+.big-prize-info {
   font-family: 'ShopeeBold';
+  font-weight: 700;
 }
+
+/* 品名、pill、商品名稱 → Regular（不要太粗） */
+.big-prize-name,
+.pill,
+.prize-card .prize-name,
+.prize-card .name {
+  font-family: 'ShopeeRegular';
+  font-weight: 400;
+}
+
+
+/* 內容文字 → Regular */
+.note,
+.legal {
+  font-family: 'ShopeeRegular';
+  font-weight: 400;
+}
+
+/* 內容中的 strong 再拉回 Bold */
+.note strong {
+  font-family: 'ShopeeBold';
+  font-weight: 700;
+}
+
 .note{max-width:1200px;width:100%;margin:0 auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
 .note img{max-width:100%;height:auto;}
 /* Product Names use Medium */
